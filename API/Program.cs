@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<DataContext>(opt => {opt.UseSqlServer(builder.Configuration.GetConnectionString("MyCon")); });
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,6 +16,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseCors(X => X.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
 
 app.MapControllers();
